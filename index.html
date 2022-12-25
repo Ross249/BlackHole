@@ -7,7 +7,12 @@
     <title>Vite + React</title>
   </head>
   <body>
+    <script type="x-shader/x-vertex" id="vertexShader">
+      void main()	{
+        gl_Position = vec4( position, 1.0 );
+      }
+    </script>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
