@@ -91,9 +91,9 @@ const init = () => {
 
   textures = {};
 
-  loadTexture("bg", "src/assets/background.jpg", THREE.NearestFilter);
-  loadTexture("star", "src/assets/stars.png", THREE.LinearFilter);
-  loadTexture("disk", "src/assets/light.png", THREE.LinearFilter);
+  loadTexture("bg", "/assets/background.jpg", THREE.NearestFilter);
+  loadTexture("star", "assets/stars.png", THREE.LinearFilter);
+  loadTexture("disk", "/assets/light.png", THREE.LinearFilter);
 
   uniforms = {
     time: { type: "f", value: 0.0 },
@@ -198,7 +198,7 @@ const addGUI = () => {
           break;
       }
 
-      loader.load("src/shaders/shader.glsl", (data) => {
+      loader.load("./shaders/shader.glsl", (data) => {
         material.fragmentShader = defines + data;
         // material.fragmentShader.needsUpdate = true;
         material.needsUpdate = true;
