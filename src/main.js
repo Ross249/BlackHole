@@ -118,7 +118,7 @@ const init = () => {
     uniforms: uniforms,
     vertexShader: document.getElementById("vertexShader").textContent,
   });
-  loader.load("shaders/shader.glsl", (data) => {
+  loader.load("src/shaders/shader.glsl", (data) => {
     let defines = `#define STEP 0.05
 #define NSTEPS 600
 `;
@@ -198,7 +198,7 @@ const addGUI = () => {
           break;
       }
 
-      loader.load("shaders/shader.glsl", (data) => {
+      loader.load("src/shaders/shader.glsl", (data) => {
         material.fragmentShader = defines + data;
         material.fragmentShader.needsUpdate = true;
         material.needsUpdate = true;
