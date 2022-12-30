@@ -1,3 +1,3 @@
 # BlackHole
 
-![](/public/assets/showcase.gif)
+<!-- ![](/public/assets/showcase.gif) -->
