@@ -1,3 +1,3 @@
 # BlackHole
 
-<video src='public/assets/showcase.mov' width="100%"/>
+![](/public/assets/showcase.gif)
