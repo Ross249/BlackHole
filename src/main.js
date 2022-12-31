@@ -42,10 +42,12 @@ let time;
 let getImageData, imgData;
 
 window.onload = () => {
+  // like a frame id
   lastframe = Date.now();
 
   scene = new THREE.Scene();
 
+  // renderer
   renderer = new THREE.WebGLRenderer();
   renderer.setClearColor(0x000000, 1.0);
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -56,18 +58,24 @@ window.onload = () => {
 
   document.body.appendChild(renderer.domElement);
 
+  // post-processing
   composer = new EffectComposer(renderer);
   let renderPass = new RenderPass(scene, camera);
 
+  // renderer ->  renderPass -> scenePass -> effectBloom -> effectCopy
   effectBloom = new UnrealBloomPass(128, 0.8, 2.0, 0.0);
   let scenePass = new RenderPass(scene, camera);
   let effectCopy = new ShaderPass(CopyShader);
   effectCopy.renderToScreen = true;
+
   composer.addPass(renderPass);
+  composer.addPass(scenePass);
   composer.addPass(effectBloom);
   composer.addPass(effectCopy);
 
   init();
+
+  // set up observer
   observer = new Observer(
     60.0,
     window.innerWidth / window.innerHeight,
@@ -75,6 +83,7 @@ window.onload = () => {
     80000
   );
   observer.distance = 8;
+  // add drag controller
   camControl = new CameraDragControls(observer, renderer.domElement);
 
   scene.add(observer);

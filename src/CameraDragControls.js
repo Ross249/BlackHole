@@ -1,5 +1,10 @@
 import * as THREE from "three";
 
+/**
+ * drag controller
+ * @param {*} object
+ * @param {*} domElement
+ */
 export default function CameraDragControls(object, domElement) {
   this.object = object;
 
@@ -29,7 +34,7 @@ export default function CameraDragControls(object, domElement) {
     this.domElement.setAttribute("tabindex", -1);
   }
 
-  //
+  //resize view
 
   this.handleResize = function () {
     if (this.domElement === document) {
@@ -90,6 +95,7 @@ export default function CameraDragControls(object, domElement) {
   };
 
   this.update = function (delta) {
+    // use or not
     if (this.enabled === false) return;
 
     if (this.object.angularVelocity > 0)

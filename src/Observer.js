@@ -1,5 +1,8 @@
 import * as THREE from "three";
 
+/**
+ * custom camera
+ */
 export class Observer extends THREE.PerspectiveCamera {
   constructor(fov, ratio, near, far) {
     super(fov, ratio, near, far);
