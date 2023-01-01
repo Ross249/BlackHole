@@ -95,7 +95,10 @@ window.onload = () => {
 };
 
 const init = () => {
+  // texture loader load texture file and put them in a object
   textureLoader = new THREE.TextureLoader();
+
+  // file loader is to load shader file
   loader = new THREE.FileLoader();
 
   textures = {};
@@ -104,6 +107,7 @@ const init = () => {
   loadTexture("star", "/assets/stars.png", THREE.LinearFilter);
   loadTexture("disk", "/assets/light.png", THREE.LinearFilter);
 
+  // expose attributes interface to shader program
   uniforms = {
     time: { type: "f", value: 0.0 },
     resolution: { type: "v2", value: new THREE.Vector2() },
@@ -123,6 +127,7 @@ const init = () => {
     disk_texture: { type: "t", value: null },
   };
 
+  // set up material and vertex shader then put them into mesh and add in scene
   material = new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: document.getElementById("vertexShader").textContent,
@@ -140,6 +145,7 @@ const init = () => {
   });
 };
 
+// dat.gui set up
 const addGUI = () => {
   perfconf = {
     resolution: 1.0,
@@ -230,7 +236,7 @@ const addGUI = () => {
   effectFolder.add(effectconf, "accretion_disk");
   effectFolder.add(effectconf, "use_disk_texture");
   perfFolder.open();
-  //bloomFolder.open()
+  bloomFolder.open();
   observerFolder.open();
   effectFolder.open();
 
@@ -238,9 +244,12 @@ const addGUI = () => {
 };
 
 const update = () => {
+  // update time delta
   delta = (Date.now() - lastframe) / 1000;
   time += delta;
+  // fps monitor update
   stats.update();
+  // update windows' stuff
   renderer.setPixelRatio(window.devicePixelRatio * perfconf.resolution);
   renderer.setSize(window.innerWidth, window.innerHeight);
   composer.setSize(
@@ -255,11 +264,14 @@ const update = () => {
   lastframe = Date.now();
 };
 
+// update uniforms
 const updateUniforms = () => {
+  // window
   uniforms.time.value = time;
   uniforms.resolution.value.x = window.innerWidth * perfconf.resolution;
   uniforms.resolution.value.y = window.innerHeight * perfconf.resolution;
 
+  // camera
   uniforms.cam_pos.value = observer.position;
   uniforms.cam_dir.value = observer.direction;
   uniforms.cam_up.value = observer.up;
@@ -267,6 +279,7 @@ const updateUniforms = () => {
 
   uniforms.cam_vel.value = observer.velocity;
 
+  // texture
   uniforms.bg_texture.value = textures["bg1"];
   uniforms.star_texture.value = textures["star"];
   uniforms.disk_texture.value = textures["disk"];
@@ -276,9 +289,12 @@ const updateUniforms = () => {
   effectBloom.radius = bloomconf.radius;
   effectBloom.threshold = bloomconf.threshold;
 
+  // observer position
   observer.distance = camconf.distance;
   observer.moving = camconf.orbit;
   observer.fov = camconf.fov;
+
+  // effect
   uniforms.lorentz_transform.value = effectconf.lorentz_transform;
   uniforms.accretion_disk.value = effectconf.accretion_disk;
   uniforms.use_disk_texture.value = effectconf.use_disk_texture;
@@ -302,6 +318,7 @@ const loadTexture = (
   });
 };
 
+// fps monitor
 const addMonitor = () => {
   stats = new Stats();
   stats.setMode(0);
@@ -311,6 +328,7 @@ const addMonitor = () => {
   document.body.appendChild(stats.domElement);
 };
 
+// capture screen
 const render = () => {
   if (getImageData == true) {
     imgData = renderer.domElement.toDataURL();
